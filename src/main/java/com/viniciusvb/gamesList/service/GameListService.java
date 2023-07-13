@@ -1,34 +1,26 @@
 package com.viniciusvb.gamesList.service;
 
-import com.viniciusvb.gamesList.dto.GameDTO;
+import com.viniciusvb.gamesList.dto.GameListDTO;
 import com.viniciusvb.gamesList.dto.GameMinDTO;
-import com.viniciusvb.gamesList.entities.Game;
-import com.viniciusvb.gamesList.repositories.GameRepository;
-
+import com.viniciusvb.gamesList.entities.GameList;
+import com.viniciusvb.gamesList.repositories.GameListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class GameService {
+public class GameListService {
 
     @Autowired
-    private GameRepository gameRepository;
+    private GameListRepository gameListRepository;
 
     @Transactional(readOnly = true)
-    public List<GameMinDTO> findAll() {
-        List<Game> allGamesList = gameRepository.findAll();
-        return allGamesList.stream()
-                .map(game -> new GameMinDTO(game))
+    public List<GameListDTO> findAll() {
+        List<GameList> allListsResult = gameListRepository.findAll();
+        return allListsResult.stream()
+                .map(gameList -> new GameListDTO(gameList))
                 .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public GameDTO findById(Long gameId) {
-        Game game = gameRepository.findById(gameId).get();
-        return new GameDTO(game);
     }
 }
