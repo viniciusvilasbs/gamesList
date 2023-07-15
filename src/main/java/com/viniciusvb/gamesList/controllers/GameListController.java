@@ -3,14 +3,12 @@ package com.viniciusvb.gamesList.controllers;
 import com.viniciusvb.gamesList.dto.GameDTO;
 import com.viniciusvb.gamesList.dto.GameListDTO;
 import com.viniciusvb.gamesList.dto.GameMinDTO;
+import com.viniciusvb.gamesList.dto.ReplacementDTO;
 import com.viniciusvb.gamesList.entities.GameList;
 import com.viniciusvb.gamesList.service.GameListService;
 import com.viniciusvb.gamesList.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +32,10 @@ public class GameListController {
     public List<GameMinDTO> findByList(@PathVariable Long listId) {
         List<GameMinDTO> findByListResult = gameService.findByList(listId);
         return  findByListResult;
+    }
+
+    @PostMapping(value = "/{listId}/replacement")
+    public void moveObj(@PathVariable Long listId, @RequestBody ReplacementDTO body) {
+        gameListService.move(listId, body.getSourceIndex(), body.getDestinationIndex());
     }
 }
